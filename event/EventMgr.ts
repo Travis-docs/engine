@@ -1,41 +1,41 @@
 
 export default class EventMgr {
-    event_listener: Map<any, Map<number, Function>>;
+    event_listener: {};
     event_mgr_uuid: number;
     Init() {
         this.event_mgr_uuid = 0;
-        this.event_listener = new Map<any, Map<number, Function>>();
+        this.event_listener = {};
     }
     GenUUID(): number {
         return ++ this.event_mgr_uuid;
     }
     Emit(event: any, data: any): void {
-        let listener: Map<number, Function> = this.event_listener.get(event);
+        let listener = this.event_listener[event];
         if(!listener) return;
-        listener.forEach(function(callback) {
-            callback(data);
-        });
+        for (let i in listener) {
+            listener[i](data);
+        }
     }
 
     BindEvent(event: any, callback: Function): number {
-        let listener: Map<number, Function> = this.event_listener.get(event);
+        let listener = this.event_listener[event];
         if(!listener) {
-            listener = new Map<number, Function>();
-            this.event_listener.set(event, listener);
+            listener = {};
+            this.event_listener[event] = listener;
         }
         let uuid = this.GenUUID();
-        listener.set(uuid, callback);
+        listener[uuid] = callback;
         return uuid;
     }
 
     UnbindEvent(event: any, uuid: number): void {
-        let listener: Map<number, Function> = this.event_listener.get(event);
-        if(listener && listener.has(uuid)) {
-            listener.delete(uuid);
+        let listener = this.event_listener[event];
+        if(listener && listener[uuid]) {
+            delete listener[uuid];
         }
     }
     Clear(): void {
         this.event_mgr_uuid = 0;
-        this.event_listener.clear();
+        this.event_listener = null;
     }
 }

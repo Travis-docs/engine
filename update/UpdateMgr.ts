@@ -2,12 +2,12 @@ import Updater from "./Updater";
 
 export default class UpdateMgr {
     updates: Set<any>;
-    add_update_list: Array<any>;
-    del_update_list: Array<any>;
+    add_update_list: any[];
+    del_update_list: any[];
     Init() {
         this.updates = new Set<any>();
-        this.add_update_list = new Array<any>();
-        this.del_update_list = new Array<any>();
+        this.add_update_list = [];
+        this.del_update_list = [];
     }
     AddUpdate(obj: any): void {
         this.add_update_list.push(obj);

@@ -1,17 +1,17 @@
 
 export default class LogMgr {
-    logs: Map<LogLevel, Array<string>>;
+    logs: {};
 
     Init(): void {
-        this.logs = new Map<LogLevel, Array<string>>();
-        this.logs.set(LogLevel.Info, new Array<string>());
-        this.logs.set(LogLevel.Debug, new Array<string>());
-        this.logs.set(LogLevel.Warn, new Array<string>());
-        this.logs.set(LogLevel.Error, new Array<string>());
+        this.logs = {};
+        this.logs[LogLevel.Info] = new Array<string>();
+        this.logs[LogLevel.Debug] = new Array<string>();
+        this.logs[LogLevel.Warn] = new Array<string>();
+        this.logs[LogLevel.Error] = new Array<string>();
     }
 
     Log(lv: LogLevel, info: string): void {
-        this.logs.get(lv).push(info);
+        this.logs[lv].push(info);
         console.log(info);
         //cc.log(info);
     }

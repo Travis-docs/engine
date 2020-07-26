@@ -1,16 +1,16 @@
 
 export default class StoryMgr {
-    storys: Map<string, Function>;
+    storys: {};
     Init(): void {
-        this.storys = new Map<string, Function>();
+        this.storys = {};
     }
     Get(name: string): Function {
-        return this.storys.get(name);
+        return this.storys[name];
     }
     Register(name: string, callback: Function): void {
-        this.storys.set(name, callback);
+        this.storys[name] = callback;
     }
     Unregister(name: string): void {
-        this.storys.delete(name);
+        delete this.storys[name]
     }
 }
