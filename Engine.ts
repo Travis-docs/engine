@@ -7,13 +7,11 @@ import TimerMgr from "./time/TimerMgr";
 import EventMgr from "./event/EventMgr";
 import StoryMgr from "./story/StoryMgr";
 import InputMgr from "./input/InputMgr";
-
-
-
-
+import CocosSceneMgr from "./scene/CocosSceneMgr";
 
 
 export default class Engine {
+    static engine_init_flag = false;
     static root_node: cc.Node;
     static log_mgr: LogMgr;
     static engine_setting: EngineSetting;
@@ -24,6 +22,7 @@ export default class Engine {
     static event_mgr: EventMgr;
     static story_mgr: StoryMgr;
     static input_mgr: InputMgr;
+    static cocos_scene_mgr: CocosSceneMgr;
     static Init(): void {
 
         // 添加常驻根节点
@@ -69,6 +68,23 @@ export default class Engine {
         // inputMgr
         Engine.input_mgr = new InputMgr();
         Engine.input_mgr.Init();
+
+        //cocosSceneMgr
+        Engine.cocos_scene_mgr = new CocosSceneMgr();
+        Engine.cocos_scene_mgr.Init();
+
+        //engineInitFlag
+        Engine.engine_init_flag = true;
+    }
+    static onLoad (): void {
+        if (!Engine.engine_init_flag) return;
+        Engine.LogInfo("Engine onLoad ...");
+    }
+
+    static start (): void {
+        if (!Engine.engine_init_flag) return;
+        Engine.LogInfo("Engine start ...");
+        Engine.cocos_scene_mgr.SceneOnStart();
     }
     static Update(dt: number): void {
         Engine.time_sys.Update(dt);
@@ -91,6 +107,7 @@ export default class Engine {
     static get StoryMgr(): StoryMgr {return Engine.story_mgr;}
     static RegisterStory(name: string, callback: Function): void {Engine.story_mgr.Register(name, callback);}
     static UnregisterStory(name: string): void {Engine.story_mgr.Unregister(name);}
-    
+    // cocosSceneMgr
+    static LoadScene(name: string): boolean {return Engine.cocos_scene_mgr.LoadScene(name);}
     
 }
