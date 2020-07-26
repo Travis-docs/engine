@@ -15,7 +15,7 @@ export default class InputMgr {
     }
 
     onKeyUp(event): void {
-        Engine.EventMgr.Emit("KeyUp", {key:event.keyCode});
+        Engine.EventMgr.Emit("KeyUp", {keyCode:event.keyCode});
         // switch(event.keyCode) {
         //     case cc.macro.KEY.a:
         //         console.log('release a key');

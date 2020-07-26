@@ -13,10 +13,10 @@ export default class Vector2 {
         this.x = x;
         this.y = y;
     }
-    get X(): number{ return this.x; }
-    set X(v: number){ this.x = v; }
-    get Y(): number{ return this.y; }
-    set Y(v: number){ this.y = v; }
+    X(): number{ return this.x; }
+    SetX(v: number){ this.x = v; }
+    Y(): number{ return this.y; }
+    SetY(v: number){ this.y = v; }
     copy(): Vector2 {
         return new Vector2(this.x, this.y);
     }
